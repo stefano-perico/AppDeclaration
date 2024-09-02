@@ -83,7 +83,7 @@ class Declaration
         return $this->id;
     }
 
-    public function getUuid(): ?AppUuid
+    public function getUuid(): AppUuid
     {
         return $this->uuid;
     }
