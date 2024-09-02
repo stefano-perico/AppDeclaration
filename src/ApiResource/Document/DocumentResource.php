@@ -1,23 +1,23 @@
 <?php
 
-namespace App\ApiResource\Declaration;
+namespace App\ApiResource\Document;
 
 use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\Post;
-use App\ApiResource\Declaration\State\Processor\CreateDeclarationProcessor;
-use App\ApiResource\Declaration\State\Provider\GetDeclarationProvider;
+use App\ApiResource\Document\State\Processor\CreateDocumentProcessor;
+use App\ApiResource\Document\State\Provider\GetDocumentProvider;
 use App\Entity\Declaration;
 
-#[ApiResource(shortName: 'declaration')]
+#[ApiResource(shortName: 'Document')]
 #[Get(
-    provider: GetDeclarationProvider::class
+    provider: GetDocumentProvider::class,
 )]
 #[Post(
-    processor: CreateDeclarationProcessor::class
+    processor: CreateDocumentProcessor::class,
 )]
-class DeclarationResource
+class DocumentResource
 {
     public function __construct(
         #[ApiProperty(identifier: true)]

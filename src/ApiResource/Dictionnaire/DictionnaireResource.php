@@ -1,23 +1,23 @@
 <?php
 
-namespace App\ApiResource\Declaration;
+namespace App\ApiResource\Dictionnaire;
 
 use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\Post;
 use App\ApiResource\Declaration\State\Processor\CreateDeclarationProcessor;
-use App\ApiResource\Declaration\State\Provider\GetDeclarationProvider;
+use App\ApiResource\Dictionnaire\State\Provider\GetDictionnaireProvider;
 use App\Entity\Declaration;
 
-#[ApiResource(shortName: 'declaration')]
+#[ApiResource(shortName: 'Dictionnaire')]
 #[Get(
-    provider: GetDeclarationProvider::class
+    provider: GetDictionnaireProvider::class,
 )]
 #[Post(
-    processor: CreateDeclarationProcessor::class
+    processor: CreateDeclarationProcessor::class,
 )]
-class DeclarationResource
+class DictionnaireResource
 {
     public function __construct(
         #[ApiProperty(identifier: true)]
@@ -31,4 +31,5 @@ class DeclarationResource
             id: $declaration->getUuid(),
         );
     }
+
 }
