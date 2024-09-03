@@ -1,0 +1,21 @@
+FROM  __ACR_NAME__.azurecr.io/interinvest/php:8.3-alpine as builder
+
+ENV COMPOSER_ALLOW_SUPERUSER=1
+
+COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
+
+COPY composer.json composer.lock symfony.lock /srv/app/
+
+WORKDIR /srv/app
+
+RUN composer install -a --no-scripts
+
+COPY . /srv/app
+
+RUN composer dump-autoload
+
+RUN mkdir -p /srv/app/var/cache && \
+        mkdir -p /srv/app/var/log && \
+          php /srv/app/bin/console cache:clear --env=prod && \
+            php /srv/app/bin/console assets:install --env=prod && \
+                chmod -R 777 /srv/app/var
