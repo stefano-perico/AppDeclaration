@@ -18,10 +18,12 @@ DOCKER_COMPOSE_LINT = $(DOCKER_COMPOSE) exec app php bin/console lint:
 DOCKER_COMPOSE_DB = $(DOCKER_COMPOSE) exec database
 #<---DOCKER---#
 #>---COMPOSER-#
-COMPOSER = composer
+COMPOSER = $(DOCKER_COMPOSE_APP) composer
+COMPOSER_REQUIRE = $(COMPOSER) require $(filter-out $@,$(MAKECMDGOALS))
 COMPOSER_INSTALL = $(COMPOSER) install -o
 COMPOSER_UPDATE = $(COMPOSER) update -o
 #<---COMPOSER-#
+
 ## === 🆘  HELP ==================================================
 help: ## Show this help.
 	@echo "Symfony-And-Docker-Makefile"
@@ -127,18 +129,21 @@ sf-dump-routes: ## Dump routes.
 #---------------------------------------------#
 ## === 📦  COMPOSER ==============================================
 composer-install: ## Install composer dependencies.
-	$(DOCKER_COMPOSE_APP) $(COMPOSER_INSTALL)
+	$(COMPOSER_INSTALL)
 .PHONY: composer-install
 
+composer-require: ## Require a composer package.
+	$(COMPOSER_REQUIRE)
+
 composer-update: ## Update composer dependencies.
-	$(DOCKER_COMPOSE_APP) $(COMPOSER_UPDATE)
+	$(COMPOSER_UPDATE)
 .PHONY: composer-update
 
 composer-validate: ## Validate composer.json file.
-	$(DOCKER_COMPOSE_APP) $(COMPOSER) validate
+	$(COMPOSER) validate
 .PHONY: composer-validate
 
 composer-validate-deep: ## Validate composer.json and composer.lock files in strict mode.
-	$(DOCKER_COMPOSE_APP) $(COMPOSER) validate --strict --check-lock
+	$(COMPOSER) validate --strict --check-lock
 .PHONY: composer-validate-deep
 #---------------------------------------------#
