@@ -19,11 +19,12 @@ DOCKER_COMPOSE_DB = $(DOCKER_COMPOSE) exec database
 #<---DOCKER---#
 #>---COMPOSER-#
 COMPOSER = $(DOCKER_COMPOSE_APP) composer
-COMPOSER_REQUIRE = $(COMPOSER) require $(filter-out $@,$(MAKECMDGOALS))
+COMPOSER_REQUIRE = $(COMPOSER) require $(OPTIONS) $(filter-out $@,$(MAKECMDGOALS))
 COMPOSER_INSTALL = $(COMPOSER) install -o
 COMPOSER_UPDATE = $(COMPOSER) update -o
 #<---COMPOSER-#
-
+%:
+	@:
 ## === 🆘  HELP ==================================================
 help: ## Show this help.
 	@echo "Symfony-And-Docker-Makefile"
